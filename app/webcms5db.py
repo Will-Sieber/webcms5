@@ -2,7 +2,7 @@ import sqlite3
 
 class Course:
 	def get_all():
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
 		cur.execute("SELECT ID, CODE, SEMESTER, NAME FROM COURSES")
@@ -12,10 +12,10 @@ class Course:
 		return rows
 
 	def get_query(term):
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
-		cur.execute(f"SELECT ID, CODE, SEMESTER, NAME FROM COURSES WHERE NAME LIKE '%{term}%'")
+		cur.execute(f"SELECT ID, CODE, SEMESTER, NAME FROM COURSES WHERE NAME LIKE '%{term}%' OR CODE LIKE '%{term}%'")
 		rows = cur.fetchall()
 
 		con.close()
@@ -23,7 +23,7 @@ class Course:
 
 class User:
 	def get_user(sid):
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
 		cur.execute(f"SELECT SID, NAME, IMAGE, BIO FROM USERS WHERE SID = '{sid}'")
@@ -33,7 +33,7 @@ class User:
 		return row
 
 	def check_creds(sid, password):
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
 		cur.execute(f"SELECT * FROM USERS WHERE SID = '{sid}' AND PASSWORD = '{password}'")
@@ -44,7 +44,7 @@ class User:
 		return valid
 
 	def update_image(sid, image):
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
 		cur.execute(f"UPDATE USERS SET IMAGE = '{image}' WHERE SID = '{sid}'")
@@ -55,7 +55,7 @@ class User:
 		return True
 
 	def update_bio(sid, bio):
-		con = sqlite3.connect("webcms4.sqlite")
+		con = sqlite3.connect("webcms5.sqlite")
 
 		cur = con.cursor()
 		cur.execute(f"UPDATE USERS SET BIO = ? WHERE SID = ?", (bio, sid))

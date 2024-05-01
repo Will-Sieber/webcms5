@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>WebCMS4</title>
+	<title>WebCMS5</title>
 	<link rel="stylesheet" href="/static/css/main.css">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -9,11 +9,11 @@
 <body>
 <header>
 <nav>
-	<a class="logo" href="/">WebCMS4</a>
+	<a class="logo" href="/">WebCMS5</a>
 	<!--div class="nav-course">COMP6443</div>
 	<div class="nav-course">COMP6447</div-->
 	<a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
-
+	<a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
 </nav>
 </header>
 <main>

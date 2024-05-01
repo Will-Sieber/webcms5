@@ -1,46 +1,107 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>WebCMS4</title>
+	<title>WebCMS5</title>
 	<link rel="stylesheet" href="/static/css/main.css">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
-<header>
-<nav>
-	<a class="logo" href="/">WebCMS4</a>
-	<a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
-	<a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
-</nav>
-</header>
-<main>
-	<div class="course-container">
-		<aside class="course-side">
-			<div class="course-side-title">COMP6443 22T2</div>
-			<a class="side-link active" href="/">Home</a>
-			<a class="side-link" href="/outline">Course Outline</a>
-			<a class="side-link" href="/assignments">Assignments</a>
-		</aside>
-		<section class="course-main">
-			<div class="course-main-title">Web Application Security</div>
-			<h1>Course Announcements</h1>
-
-			<article>
-			<div class="notice-title">Welcome to COMP6443</div>
-			<p>Welcome to COMP6443 Web Application Security!</p>
-			<p>This course will be hosted on the all new WebCMS4 platform. Clearly it is much more based than WebCMS3. Feel free to check out the course outline on the sidebar. The course page will be updated as the term progresses and you will start to see more content.</p>
-			</article>
-			<article>
-
-			<div class="notice-title">Assignment 1</div>
-			<p>We have been receiving many questions regarding assignment 1. Please note that the spec for assignment 1 is being prepared and is not ready yet. When it is ready you will be able to see it on the page for assignment 1.</p>
-			</article>
-		</section>
+	<header>
+		<nav>
+			<a class="logo" href="/">WebCMS5</a>
+			<a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
+			<a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
+		</nav>
+	</header>
+	<main>
+		<div class="course-container">
+			<aside class="course-side">
+				<div class="course-side-title">COMP6443 25T1</div>
+				<a class="side-link active" href="/">Home</a>
+				<a class="side-link" href="/outline">Course Outline</a>
+				<a class="side-link" href="/#">Timetable</a>
+				<a class="side-link" href="/assignments">Assignments</a>
+				<a class="side-link" href="/#">Lectures</a>
+				<a class="side-link" href="/#">Tutorials and Labs</a>
+				<a class="side-link" href="/forum">Forums</a>
+				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_exam')">
+					Exam  ⌄
+					<div id="dropdownContent_exam" class="dropdown-content">
+						<a class="side-link" href="/#">Exam info</a>
+						<a class="side-link" href="/#">Previous exams</a>
+					</div>
+				</div>
+				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_staff')">
+					Staff  ⌄
+					<div id="dropdownContent_staff" class="dropdown-content">
+						<a class="side-link" href="/profile/trashpanda">Trashpanda</a>
+						<a class="side-link" href="/profile/melon">Melon</a>
+						<a class="side-link" href="/profile/featherbear">Featherbear</a>
+						<a class="side-link" href="/profile/hamish">Hamish</a>
+					</div>
+				</div>
+				<a class="side-link-profile" href="/profile/{{user[0]}}">{{user[0]}}</a>
+			</aside>
+			<section class="course-main">
+				<div class="course-main-title">Web Application Security</div>
+				<hr>
+				<div class="course-announcements">Course Announcements</div>
+				<article>
+					<div class="notice-title">Public holiday</div>
+					<h6>Posted by Melon</h6>
+					<p>Hi everyone</p>
+					<br>
+					<p>Due to the public holiday tomorrow (Monday 1st April) there will be no lecture. 
+						The lecture to replace this one will be held on Thursday 4th April, 12pm-2pm and a recording 
+						uploaded to the YouTube playlist for anyone who can't make it.</p>
+					<br>
+					<p>Enjoy the rest of your weekend and I'll see you on Tuesday. </p>
+				</article>
+				<article>
+					<div class="notice-title">Assignment 1</div>
+					<h6>Posted by Yunsar</h6>
+					<p>We have been receiving many questions regarding assignment 1. Please note that the spec for
+						assignment 1 is being prepared and is not ready yet. When it is ready you will be able to see it
+						on the page for assignment 1.</p>
+				</article>
+				<article>
+					<div class="notice-title">Welcome to COMP6443</div>
+					<h6>Posted by Admin</h6>
+					<p>Welcome to COMP6443 Web Application Security!
+						This course will be hosted on the all new WebCMS5 platform. Clearly it is much more based than
+						WebCMS3. Feel free to check out the course outline on the sidebar. The course page will be
+						updated as the term progresses and you will start to see more content.</p>
+				</article>
+			</section>
+		</div>
+	</main>
 	</div>
-</main>
-</div>
 
+	<script>
+		function toggleDropdown(dropdownID) {
+			var dropdownContent = document.getElementById(dropdownID);
+			if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+				dropdownContent.style.display = "block";
+			} else {
+				dropdownContent.style.display = "none";
+			}
+		}
 
+		window.onclick = function (event) {
+			if (!event.target.matches('.side-link-dropdown') && !event.target.closest('.dropdown-content')) {
+				var dropdowns = document.getElementsByClassName("dropdown-content");
+				for (var i = 0; i < dropdowns.length; i++) {
+					var openDropdown = dropdowns[i];
+					if (openDropdown.style.display === "block") {
+						openDropdown.style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 </body>
+
 </html>

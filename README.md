@@ -1,4 +1,4 @@
-# WebCMS4
+# WebCMS5
 A sample vulnerable application
 
 ## Setup and Run (Docker)
