@@ -56,7 +56,7 @@ nav>a {
     display: block;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #96EC3F;
+    background-color: #aef864;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-decoration: none;
@@ -83,15 +83,15 @@ nav>a {
 }
 
 .thread-header {
-    background-color: #96EC3F;
+    background-color: hsla(90, 94%, 79%, 0.801);
     padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+    border: 2px solid #96EC3F;
     border-radius: 10px 10px 10px 10px;
 }
 
 .thread-header .logo {
     font-weight: bold;
-    color: white;
+    color: #333;
     text-decoration: none;
     font-size: 2rem;
 }
@@ -147,7 +147,7 @@ nav>a {
     width: 100%;
     padding: 10px 0px 10px 10px;
     margin-bottom: 20px;
-    background-color: #007bff; 
+    background-color: #2189f8; 
     color: #ffffff; 
     border: none;
     border-radius: 8px;
