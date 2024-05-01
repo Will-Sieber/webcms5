@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Thread - WebCMS5</title>
+    <link rel="stylesheet" href="/static/css/forum.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/forum.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="/">WebCMS5</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container_2">
+            <h2>Create New Thread</h2>
+            <form id="newThreadForm" action="/forum" method="POST">
+                <div class="form-group">
+                    <label for="threadTitle">Title</label>
+                    <input type="text" class="form-control" id="threadTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="threadMessage">Message</label>
+                    <textarea class="form-control" id="threadMessage" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="create-thread-button">Create Thread</button>
+            </form>
+            <a href="/forum" class="back-button">Back</a>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebCMS5</title>
+    <link rel="stylesheet" href="/static/css/forum.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="/">WebCMS5</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="thread-list">
+                <a href="/forum/new-thread" class="new-thread-button">New Thread</a>
+
+                <h2>Threads</h2>
+                {% for thread in threads[::-1] %}
+                <a class="thread" href="/forum/{{thread[0]}}">{{ thread[1] }}</a>
+                {% endfor %}
+            </div>
+            <div class="messages" id="messageSection">
+                <nav class="thread-header">
+                    <a class="logo" href="#">{{ thread_title }}</a>
+                </nav>
+                <div class="message-list">
+                    {% for message in messages %}
+                    <div class="message">
+                        <div class="author">{{ message[2] }}</div>
+                        <div class="content">{{ message[3] }}</div>
+                    </div>
+                    {% endfor %}
+                    <form class="message-input-form" action="/forum/{{ thread_id }}" method="post">
+                        <input type="text" name="message" placeholder="Type your message...">
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var threadHeader = document.querySelector('.thread-header');
+            var messageList = document.querySelector('.message-list');
+
+            if (threadHeader && messageList) {
+                threadHeader.classList.add('hidden');
+                messageList.classList.add('hidden');
+            }
+
+            var url = window.location.href;
+            var regex = /\/forum\/(\d+)$/;
+
+            var match = url.match(regex);
+            if (match) {
+                var threadId = match[1];
+                threadHeader.classList.remove('hidden');
+                messageList.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

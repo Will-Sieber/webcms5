@@ -1,6 +1,7 @@
 from flask import *
 from server import app
-from webcms4db import Course, User
+from webcms5db import Course, User
+from forumdb import Forum
 
 from urllib.parse import urlparse
 
@@ -35,10 +36,17 @@ def logout():
 
 @app.route("/courses", methods=["GET", "POST"])
 def courses():
-	search = request.form.get("search", "")
-	courses = Course.get_query(search)
+	if session.get("sid") is None:
+		return redirect("/login");
 
-	return render_template("courses.html", search=search, courses=courses)
+	user = User.get_user(session.get("sid"))
+	courses = ""
+
+	search = request.form.get("search", "")
+	if search != "":
+		courses = Course.get_query(search)
+
+	return render_template("courses.html", search=search, courses=courses, user=user)
 
 @app.route("/profile/<sid>")
 def profile(sid):
@@ -69,6 +77,8 @@ def edit_profile(sid):
 		if url:
 			filepath = "uploads/profiles/images/" + os.path.basename(urlparse(url).path)
 			res = requests.get(url, allow_redirects=True)
+			if res.status_code != 200:
+				return render_template("edit_profile.html", user=user)
 
 			with open(filepath, "wb") as f:
 				f.write(res.content)
@@ -89,6 +99,40 @@ def outline():
 	user = User.get_user(session.get("sid"))
 
 	return render_template("outline.html", user=user)
+
+@app.route("/forum",  methods=["GET", "POST"])
+def forum():
+	if session.get("sid") is None:
+		return redirect('/login')
+	
+	user = User.get_user(session.get("sid"))
+
+	if request.method == "POST":
+		Forum.add_thread(request.form.get('title'), user[1], request.form.get('message'))
+	
+	threads = Forum.get_all_threads()
+	return render_template('forum.html', user=user, threads=threads)
+
+@app.route("/forum/<int:thread_id>",  methods=["GET", "POST"])
+def forum_thread(thread_id):
+	if session.get("sid") is None:
+		return redirect('/login')
+	user = User.get_user(session.get("sid"))
+	
+	if request.method == "POST":
+		Forum.add_message(thread_id, user[1], request.form.get('message'))
+	
+	threads = Forum.get_all_threads()
+	messages = Forum.get_messages(thread_id)
+	thread_title = Forum.get_thread_title(thread_id)[1]
+	return render_template('forum.html', user=user, threads=threads, messages=messages, thread_title=thread_title, thread_id=thread_id)
+
+@app.route("/forum/new-thread")
+def new_thread():
+	if session.get("sid") is None:
+		return redirect('/login')
+
+	return render_template('new-thread.html')
 
 @app.route("/getimage")
 def getimage():
