@@ -14,19 +14,20 @@
 			<a class="logo" href="/">WebCMS5</a>
 			<a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
 			<a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
+			<a href="/logout" class="button">Logout</a>
 		</nav>
 	</header>
 	<main>
 		<div class="course-container">
 			<aside class="course-side">
 				<div class="course-side-title">COMP6443 25T1</div>
-				<a class="side-link active" href="/">Home</a>
-				<a class="side-link" href="/outline">Course Outline</a>
+				<a class="side-link" href="/">Home</a>
+				<a class="side-link active" href="/outline">Course Outline</a>
 				<a class="side-link" href="/#">Timetable</a>
 				<a class="side-link" href="/assignments">Assignments</a>
 				<a class="side-link" href="/#">Lectures</a>
 				<a class="side-link" href="/#">Tutorials and Labs</a>
-				<a class="side-link" href="/#">Forums</a>
+				<a class="side-link" href="/forum">Forums</a>
 				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_exam')">
 					Exam ⌄
 					<div id="dropdownContent_exam" class="dropdown-content">
@@ -37,9 +38,9 @@
 				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_staff')">
 					Staff ⌄
 					<div id="dropdownContent_staff" class="dropdown-content">
-						<a class="side-link" href="/profile/trashpanda">Trashpanda</a>
-						<a class="side-link" href="/profile/melon">Melon</a>
-						<a class="side-link" href="/profile/featherbear">Featherbear</a>
+						<a class="side-link" href="/profile/kris">Trashpanda</a>
+						<a class="side-link" href="/profile/lachaln">Melon</a>
+						<a class="side-link" href="/profile/andrew">Featherbear</a>
 						<a class="side-link" href="/profile/hamish">Hamish</a>
 					</div>
 				</div>
