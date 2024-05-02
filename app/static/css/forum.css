@@ -36,9 +36,9 @@ nav>a {
 }
 
 .container {
-    display: grid;
+    display: flex;
     grid-template-columns: 250px 1fr;
-    height: 100vh;
+    height: 94vh;
 }
 
 .thread-list {
@@ -53,7 +53,7 @@ nav>a {
 }
 
 .thread {
-    display: block;
+    width: 250px;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #aef864;
@@ -61,6 +61,7 @@ nav>a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-decoration: none;
     color: #333333;
+    z-index: 2;
     transition: background-color 0.3s ease;
 }
 
@@ -69,13 +70,13 @@ nav>a {
 }
 
 .messages {
-    height: 100vh;
+    max-height: 100vh;
     flex: 1;
     padding: 2rem 5rem;
     background-color: #f7f7f7;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    overflow-y: auto;
 }
 
 .messages .message:first-child {
@@ -136,18 +137,13 @@ nav>a {
 }
 
 
-.container {
-    display: flex;
-    height: 100vh;
-}
-
 .new-thread-button {
     max-width: 240px;
     display: block;
     width: 100%;
     padding: 10px 0px 10px 10px;
     margin-bottom: 20px;
-    background-color: #2189f8; 
+    background-color: #7ae013; 
     color: #ffffff; 
     border: none;
     border-radius: 8px;
@@ -159,7 +155,7 @@ nav>a {
 }
 
 .new-thread-button:hover {
-    background-color: #0056b3; 
+    background-color: #85e723c2; 
 }
 
 .message-input-form {
@@ -186,7 +182,7 @@ nav>a {
 }
 
 .message-input-form button:hover {
-    background-color: #0056b3;
+    background-color: #96EC3F;
 }
 
 .modal-dialog {
@@ -227,7 +223,7 @@ textarea {
 
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #adf863;
 }
 
 .container_2 {
@@ -251,4 +247,37 @@ button[type="submit"]:hover {
     font-weight: bold;
     text-decoration: none;
     transition: background-color 0.3s ease;
+}
+
+.delete-thread-circle {
+    width: 20px;
+    height: 20px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: #ff6347;
+    padding-bottom: 5px;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.delete-thread {
+    max-width: 48px;
+    background-color: #ff6347;
+    color: white; 
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    border-radius: 10px; 
+    z-index: 1; 
+    cursor: pointer;
+    display:flex;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+}
+
+.thread-container {
+    display: flex;
+    flex-direction: row;
 }

@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import subprocess
 import requests
 import os
+import bleach
 
 @app.route("/")
 def index():
@@ -105,26 +106,39 @@ def forum():
 	if session.get("sid") is None:
 		return redirect('/login')
 	
-	user = User.get_user(session.get("sid"))
+	user = User.get_user(session.get("sid"))  
 
 	if request.method == "POST":
+		message = request.form.get("message")
+		message = sanitise_input(message)
 		Forum.add_thread(request.form.get('title'), user[1], request.form.get('message'))
 	
 	threads = Forum.get_all_threads()
 	return render_template('forum.html', user=user, threads=threads)
 
-@app.route("/forum/<int:thread_id>",  methods=["GET", "POST"])
+@app.route("/forum/<int:thread_id>",  methods=["GET", "POST", "DELETE"])
 def forum_thread(thread_id):
 	if session.get("sid") is None:
 		return redirect('/login')
 	user = User.get_user(session.get("sid"))
+
+	if request.method == "DELETE":
+		Forum.delete_thread(thread_id)
+		threads = Forum.get_all_threads()
+
+	messages = []
+	thread_title = ""
 	
 	if request.method == "POST":
-		Forum.add_message(thread_id, user[1], request.form.get('message'))
+		message = request.form.get('message')
+		message = sanitise_input(message)
+		Forum.add_message(thread_id, user[1], message)
 	
 	threads = Forum.get_all_threads()
-	messages = Forum.get_messages(thread_id)
-	thread_title = Forum.get_thread_title(thread_id)[1]
+	if thread_id in [thread[0] for thread in threads]:
+		messages = Forum.get_messages(thread_id)
+		thread_title = Forum.get_thread_title(thread_id)[1]
+		
 	return render_template('forum.html', user=user, threads=threads, messages=messages, thread_title=thread_title, thread_id=thread_id)
 
 @app.route("/forum/new-thread")
@@ -158,5 +172,14 @@ def assignments():
 
 	return render_template("assignments.html", user=user, assignment="assignment1")
 	
-		
-
+def sanitise_input(input):
+	allowed_tags = ['a', 'b', 'i', 'u', 'p', 'br', 'div', 'span', 'img']
+	allowed_attrs = {
+		'*': ['style'],
+		'a': ['href', 'title'],
+		'div': ['class'],
+		'span': ['class'],
+		'img': ['srcset']
+	}
+	sanitised_input = bleach.clean(input, tags=allowed_tags, attributes=allowed_attrs, strip=True)
+	return sanitised_input

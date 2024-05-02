@@ -39,7 +39,7 @@ class Forum:
     def add_thread(name, author, message):
         con = sqlite3.connect("forum.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO threads (name) VALUES (?)", (name,))
+        cur.execute("INSERT INTO threads (name, author) VALUES (?, ?)", (name, author))
         thread_id = cur.lastrowid
         cur.execute("INSERT INTO messages (thread_id, author, content) VALUES (?, ?, ?)", (thread_id, author, message))
         con.commit()
@@ -63,3 +63,11 @@ class Forum:
         con.close()
         return row
     
+    @staticmethod
+    def delete_thread(thread_id):
+        con = sqlite3.connect("forum.db")
+        cur = con.cursor()
+        cur.execute("DELETE FROM messages WHERE thread_id = ?", (thread_id,))
+        cur.execute("DELETE FROM threads WHERE id = ?", (thread_id,))
+        con.commit()
+        con.close()

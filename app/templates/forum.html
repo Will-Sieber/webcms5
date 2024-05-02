@@ -23,10 +23,21 @@
 
                 <h2>Threads</h2>
                 {% for thread in threads[::-1] %}
-                <a class="thread" href="/forum/{{thread[0]}}">{{ thread[1] }}</a>
+                <div class="thread-container">
+                    <a class="thread" href="/forum/{{ thread[0] }}">
+                        {{ thread[1] }}
+                    </a>
+                    {% if thread[2] == user[1] %}
+                    <div class="delete-thread">
+                        <button class="delete-thread-circle" data-thread-id="{{ thread[0] }}"
+                            onclick="deleteRequest('{{ thread[0] }}')">✖</button>
+                    </div>
+                    {% endif %}
+                </div>
                 {% endfor %}
             </div>
             <div class="messages" id="messageSection">
+                {% if thread_title != "" or messages != [] %}
                 <nav class="thread-header">
                     <a class="logo" href="#">{{ thread_title }}</a>
                 </nav>
@@ -34,7 +45,7 @@
                     {% for message in messages %}
                     <div class="message">
                         <div class="author">{{ message[2] }}</div>
-                        <div class="content">{{ message[3] }}</div>
+                        <div class="content">{{ message[3] | safe }}</div>
                     </div>
                     {% endfor %}
                     <form class="message-input-form" action="/forum/{{ thread_id }}" method="post">
@@ -42,6 +53,7 @@
                         <button type="submit">Send</button>
                     </form>
                 </div>
+                {% endif %}
             </div>
 
         </div>
@@ -66,6 +78,24 @@
                 messageList.classList.remove('hidden');
             }
         });
+
+
+        async function deleteRequest(threadId) {
+            console.log(threadId)
+            let url = `/forum/${threadId}`;
+            await fetch(`${url}`, {
+                method: 'DELETE',
+                body: JSON.stringify("sadfasfd")
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log('Thread deleted successfully');
+                window.location.href = '/forum';
+            }).catch(error => {
+                window.location.reload();
+            });
+        }
     </script>
 </body>
 
