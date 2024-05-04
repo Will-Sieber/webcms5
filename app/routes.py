@@ -165,10 +165,14 @@ def assignments():
 
 	if request.method == "POST":
 		assign = request.form.get("assignment", "")
-		output = subprocess.check_output(["bash", "-c", "./checksubmission.sh " + 
-				assign]).decode()
-		return render_template("assignments.html", user=user, assignment=assign, 
-				output=output)
+		try:
+			output = subprocess.check_output(["bash", "-c", "./checksubmission.sh " + assign]).decode()
+		except subprocess.CalledProcessError as e:
+			output = f"Error: {e}"
+		except Exception as e:
+			output = f"Unexpected error: {e}"
+
+		return render_template("assignments.html", user=user, assignment=assign, output=output)
 
 	return render_template("assignments.html", user=user, assignment="assignment1")
 	
