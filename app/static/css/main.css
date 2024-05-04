@@ -79,7 +79,9 @@ main {
 }
 
 .course-container {
-	display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 20px; 
 }
 
 .course-side {
@@ -87,7 +89,7 @@ main {
 	color: #4a5568;
 	border: grey solid 1px;
 	border-radius: 10px;
-	height: 484px;
+	height: fit-content;
 }
 
 .course-side-title {
