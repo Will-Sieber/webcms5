@@ -9,6 +9,8 @@ import subprocess
 import requests
 import os
 import bleach
+import re
+import xml.etree.ElementTree as ET
 
 @app.route("/")
 def index():
@@ -76,17 +78,32 @@ def edit_profile(sid):
 	if request.method == "POST":
 		url = request.form.get("url", "").strip()
 		if url:
-			filepath = "uploads/profiles/images/" + os.path.basename(urlparse(url).path)
-			res = requests.get(url, allow_redirects=True)
-			if res.status_code != 200:
-				return render_template("edit_profile.html", user=user)
+			parsed_url = urlparse(url)
+			if parsed_url.scheme not in ['http', 'https']:
+				return render_template("edit_profile.html", user=user, error="Invalid URL")
 
-			with open(filepath, "wb") as f:
-				f.write(res.content)
+			filename = os.path.basename(parsed_url.path)
+			filepath = os.path.join("uploads", "profiles", "images", filename)
 
-			User.update_image(sid, os.path.basename(filepath))
+			try:
+				res = requests.get(url, allow_redirects=True)
+				res.raise_for_status()
+			except requests.exceptions.RequestException as e:
+				return render_template("edit_profile.html", user=user, error=e)
 
-		User.update_bio(sid, request.form.get("bio", ""))
+			try:
+				with open(filepath, "wb") as f:
+					f.write(res.content)
+			except OSError as e:
+				return render_template("edit_profile.html", user=user, error="Failed to save file")
+
+			User.update_image(sid, filename)
+
+		bio = request.form.get("bio", "").strip()
+		if bio:
+			bio = re.sub(r'<\s*\/?\s*(script|img|svg)\s*\/?\s*>', '', bio)
+			User.update_bio(sid, bio)
+
 		user = User.get_user(sid)
 		return render_template("edit_profile.html", user=user, update=True)
 
@@ -100,6 +117,65 @@ def outline():
 	user = User.get_user(session.get("sid"))
 
 	return render_template("outline.html", user=user)
+
+@app.route("/exam-info")
+def exam_info():
+	if session.get("sid") is None:
+		return redirect("/login");
+
+	user = User.get_user(session.get("sid"))
+
+	return render_template("exam-info.html", user=user)
+
+@app.route("/previous-exam", methods=["GET", "POST"])
+def handle_previous_exam():
+	if session.get("sid") is None:
+		return redirect("/login")
+
+	user = User.get_user(session.get("sid"))
+	if user[0] == "admin":
+		if request.method == "GET":
+			return render_template("previous-exam.html", user=user)
+		elif request.method == "POST":
+			if 'file' not in request.files:
+				return redirect(request.url)
+
+			file = request.files['file']
+			if file.filename == '':
+				return redirect(request.url)
+
+			if file and file.filename.endswith('.xml'):
+				filename = os.path.join("uploads", file.filename)
+				file.save(filename)
+				exam_data = parse_exam_xml(filename)
+				res = "Uploaded file: " + file.filename
+			else:
+				res = "Failed to upload file: " + file.filename
+
+			return render_template("previous-exam.html", exam_data=exam_data, res=res, user=user)
+	else:
+		abort(403)
+
+def parse_exam_xml(filename):
+    try:
+        tree = ET.parse(filename)
+        root = tree.getroot()
+
+        data = []
+        for element in root.findall('.//*'):
+            element_data = {
+                'tag': element.tag,
+                'text': element.text.strip() if element.text else '',
+                'attributes': element.attrib,
+                'children': [child.tag for child in element.findall('*')]
+            }
+            data.append(element_data)
+
+        return data
+
+    except ET.ParseError as e:
+        print(f"Error parsing XML: {e}")
+        return None
 
 @app.route("/forum",  methods=["GET", "POST"])
 def forum():

