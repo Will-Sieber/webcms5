@@ -267,6 +267,7 @@ button[type="submit"]:hover {
     background-color: #ff6347;
     color: white; 
     padding: 10px 10px;
+    margin-left: 5px;
     margin-bottom: 10px;
     border-radius: 10px; 
     z-index: 1; 
