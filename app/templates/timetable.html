@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebCMS5</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="/">WebCMS5</a>
+            <a class="nav-search" href="/courses"><span class="material-icons">search</span></a>
+            <a class="nav-profile" href="/profile/{{user[0]}}"><img src="/getimage?image={{user[2]}}"></a>
+            <a href="/logout" class="button">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <div class="course-container">
+            <aside class="course-side">
+                <div class="course-side-title">COMP6443 25T1</div>
+                <a class="side-link active" href="/">Home</a>
+                <a class="side-link" href="/outline">Course Outline</a>
+                <a class="side-link" href="/timetable">Timetable</a>
+                <a class="side-link" href="/assignments">Assignments</a>
+                <a class="side-link" href="/#">Lectures</a>
+                <a class="side-link" href="/#">Tutorials and Labs</a>
+                <a class="side-link" href="/forum">Forums</a>
+                <div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_exam')">
+                    Exam ⌄
+                    <div id="dropdownContent_exam" class="dropdown-content">
+                        <a class="side-link" href="/#">Exam info</a>
+                        <a class="side-link" href="/#">Previous exams</a>
+                    </div>
+                </div>
+                <div class="side-link-dropdown" onclick="toggleDropdown('dropdownContent_staff')">
+                    Staff ⌄
+                    <div id="dropdownContent_staff" class="dropdown-content">
+                        <a class="side-link" href="/profile/kris">Trashpanda</a>
+                        <a class="side-link" href="/profile/lachaln">Melon</a>
+                        <a class="side-link" href="/profile/andrew">Featherbear</a>
+                        <a class="side-link" href="/profile/hamish">Hamish</a>
+                    </div>
+                </div>
+                <a class="side-link-profile" href="/profile/{{user[0]}}">{{user[0]}}</a>
+            </aside>
+            <section class="course-main">
+                <div class="course-main-title">Web Application Security</div>
+                <hr>
+
+                <!--  -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Lectures</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Staff</th>
+                                        <th>Day</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Weeks</th>
+                                        <th>Room</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="2">
+                                            A
+                                        </td>
+                                        <td rowspan="2">
+                                            <a href="/profile/kris">Kris</a><br />
+                                        </td>
+
+                                        <td>Mon</td>
+                                        <td>12:00</td>
+                                        <td>14:00</td>
+                                        <td>1-5,7,9-10</td>
+                                        <td>Law Th G23</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tue</td>
+                                        <td>12:00</td>
+                                        <td>14:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>OShane G05</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">
+                                            B
+                                        </td>
+                                        <td rowspan="2">
+                                            <a href="/profile/kris">Kris</a><br />
+                                        </td>
+
+                                        <td>Mon</td>
+                                        <td>12:00</td>
+                                        <td>14:00</td>
+                                        <td>1-5,7,9-10</td>
+                                        <td>Online</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tue</td>
+                                        <td>12:00</td>
+                                        <td>14:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Online</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2>Tutorial and Laboratory Blocks</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Staff</th>
+                                        <th>Day</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Weeks</th>
+                                        <th>Room</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="2">
+                                            T14A
+                                        </td>
+                                        <td rowspan="2">
+                                        </td>
+
+                                        <td>Tue</td>
+                                        <td>14:00</td>
+                                        <td>15:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Online</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tue</td>
+                                        <td>15:00</td>
+                                        <td>17:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Online</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">
+                                            T17A
+                                        </td>
+                                        <td rowspan="2">
+                                        </td>
+
+                                        <td>Tue</td>
+                                        <td>17:00</td>
+                                        <td>18:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Quad 1042</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tue</td>
+                                        <td>18:00</td>
+                                        <td>20:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Quad G048</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">
+                                            W12A
+                                        </td>
+                                        <td rowspan="2">
+                                        </td>
+
+                                        <td>Wed</td>
+                                        <td>12:00</td>
+                                        <td>13:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Quad G042</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Wed</td>
+                                        <td>13:00</td>
+                                        <td>15:00</td>
+                                        <td>1-5,7-10</td>
+                                        <td>Quad 1049</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    </div>
+
+    <script>
+        function toggleDropdown(dropdownID) {
+            var dropdownContent = document.getElementById(dropdownID);
+            if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+                dropdownContent.style.display = "block";
+            } else {
+                dropdownContent.style.display = "none";
+            }
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.side-link-dropdown') && !event.target.closest('.dropdown-content')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

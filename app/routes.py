@@ -148,6 +148,15 @@ def new_thread():
 
 	return render_template('new-thread.html')
 
+@app.route("/timetable")
+def timetable():
+	if session.get("sid") is None:
+		return redirect('/login')
+	
+	user = User.get_user(session.get("sid"))
+
+	return render_template('timetable.html', user=user)
+
 @app.route("/getimage")
 def getimage():
 	print(os.getcwd())
