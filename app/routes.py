@@ -111,7 +111,7 @@ def forum():
 	if request.method == "POST":
 		message = request.form.get("message")
 		message = sanitise_input(message)
-		Forum.add_thread(request.form.get('title'), user[1], request.form.get('message'))
+		Forum.add_thread(request.form.get('title'), user[1], message)
 	
 	threads = Forum.get_all_threads()
 	return render_template('forum.html', user=user, threads=threads)
