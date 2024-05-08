@@ -24,8 +24,14 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	if request.method == "POST":
-		if User.check_creds(request.form.get("sid"), request.form.get("password")):
-			session["sid"] = request.form.get("sid")
+		sid = request.form.get("sid")
+		passwd = request.form.get("password")
+		if User.check_creds(sid, passwd):
+			session["sid"] = sid
+			if sid == 'admin':
+				response = redirect("/")
+				response.set_cookie("admin", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+				return response				
 			return redirect("/")
 		else:
 			return render_template("login.html", error="Invalid credentials")
@@ -34,8 +40,10 @@ def login():
 
 @app.route("/logout")
 def logout():
+	response = make_response(redirect("/login"))
+	response.set_cookie("admin", "", expires=0)
 	session.pop("sid")
-	return redirect("/login")
+	return response
 
 @app.route("/courses", methods=["GET", "POST"])
 def courses():
@@ -262,13 +270,12 @@ def assignments():
 	return render_template("assignments.html", user=user, assignment="assignment1")
 	
 def sanitise_input(input):
-	allowed_tags = ['a', 'b', 'i', 'u', 'p', 'br', 'div', 'span', 'img']
-	allowed_attrs = {
-		'*': ['style'],
-		'a': ['href', 'title'],
-		'div': ['class'],
-		'span': ['class'],
-		'img': ['srcset']
-	}
-	sanitised_input = bleach.clean(input, tags=allowed_tags, attributes=allowed_attrs, strip=True)
-	return sanitised_input
+
+	script_pattern = re.compile(r'<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>', re.IGNORECASE)
+	onerror_pattern = re.compile(r'onError\s*=\s*".*?"', re.IGNORECASE)
+	src_pattern = re.compile(r'src\s*=\s*["\'].*?\.(png|jpe?g)["\']', re.IGNORECASE)
+
+	sanitised_html = script_pattern.sub('', input)
+	sanitised_html = src_pattern.sub('', sanitised_html)
+	sanitised_html = onerror_pattern.sub('', sanitised_html)
+	return sanitised_html
